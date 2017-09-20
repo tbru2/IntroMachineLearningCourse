@@ -8,8 +8,8 @@ numpy.random.seed(42)
 ### The words (features) and authors (labels), already largely processed.
 ### These files should have been created from the previous (Lesson 10)
 ### mini-project.
-words_file = "../text_learning/your_word_data.pkl" 
-authors_file = "../text_learning/your_email_authors.pkl"
+words_file = "../feature_selection/your_word_data.pkl" 
+authors_file = "../feature_selection/your_email_authors.pkl"
 word_data = pickle.load( open(words_file, "r"))
 authors = pickle.load( open(authors_file, "r") )
 
@@ -35,9 +35,17 @@ features_test  = vectorizer.transform(features_test).toarray()
 features_train = features_train[:150].toarray()
 labels_train   = labels_train[:150]
 
+from sklearn import tree
+from sklearn.metrics import accuracy_score
 
-
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(features_train,label_train)
+pred = clf.predict(featres_test)
+acc = accuracy_score(features_test,pred)
+print acc
 ### your code goes here
 
+important_features = [i for i in clf.feature_importances_ if >= .2]
+print important_features
 
 
